@@ -53,10 +53,9 @@ En este práctico vamos a realizar un análisis básico de calidad de secuencias
 
 1. **Subir el archivo BAM y BED**:
     - Sube el archivo `bam` y el archivo `bed` que contiene los sitios de interés (BRCA1/2).
-
+    ![Upload](CLASE1/images/bamqc1.png)
 2. **Ejecutar BAMQC**:
     - Busca **BAMQC** en el panel de herramientas de Galaxy.
-      ![Upload](CLASE1/images/bamqc1.png)
     - Configura BAMQC para ejecutar el análisis utilizando el archivo `bam` y selecciona el archivo `bed` correspondiente a BRCA1/2 para analizar los sitios específicos.
     - Ejecuta la herramienta.
     ![Upload](CLASE1/images/bamqc2.png)

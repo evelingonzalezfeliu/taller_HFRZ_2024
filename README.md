@@ -29,11 +29,15 @@ En este práctico vamos a realizar un análisis básico de calidad de secuencias
 1. **Subir los archivos FASTQ**:
     - Ingresar a Galaxy y subir los archivos `fastq.gz` a tu espacio de trabajo. 
     - Para subir los archivos, haz clic en **Upload Data** y selecciona el archivo.
+    ![Upload](CLASE1/images/galaxy2.png)
+    ![Upload2](CLASE1/images/galaxy3.0.png)
 
 2. **Ejecutar FASTQC**:
     - En el panel de herramientas de Galaxy, busca **FASTQC** en la barra de búsqueda.
     - Ejecuta FASTQC para cada uno de los archivos `fastq.gz`.
     - Asegúrate de guardar los reportes generados.
+      ![Upload](CLASE1/images/galaxy3.png)
+     
 
 3. **Visualización de resultados**:
     - Una vez que FASTQC finalice, se generarán dos reportes: uno con el análisis en formato HTML y otro en formato texto (log).
@@ -41,6 +45,7 @@ En este práctico vamos a realizar un análisis básico de calidad de secuencias
         - Gráfico de calidad por posición de base.
         - Contenido GC.
         - Duplicación de secuencias.
+          ![Upload](CLASE1/images/Result_fastQC.png)
 
 ### 2. Control de calidad del archivo BAM con BAMQC
 

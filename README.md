@@ -72,11 +72,16 @@ En este práctico vamos a realizar un análisis básico de calidad de secuencias
     - Luego de ejecutar FASTQC y BAMQC, vamos a utilizar **MultiQC** para generar un reporte combinado.
     - Busca **MultiQC** en el panel de herramientas de Galaxy.
     - Selecciona los resultados de FASTQC y BAMQC para incluir en el informe final.
-    - Ejecuta MultiQC.
+    - Importamos archivos de FASTQC (S9 y S10) y BAMQC al Modulo MULTIQC
+     ![Upload](CLASE1/images/multiqc2.0.png)
+     ![Upload](CLASE1/images/multiqc2.png)
+    - Ejecuta MultiQC. Agregamos reportes de FASTQ y BAMQC
+      ![Upload](CLASE1/images/multiqc3.png)
 
 2. **Revisión del informe final**:
     - Una vez finalizado el proceso, visualiza el reporte generado por MultiQC.
     - Este reporte incluirá una vista consolidada de los controles de calidad realizados en los archivos FASTQ y BAM.
+      ![Upload](CLASE1/images/multiqc4.png)
 
 ---
 

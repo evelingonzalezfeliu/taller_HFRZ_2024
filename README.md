@@ -83,16 +83,6 @@ En este práctico vamos a realizar un análisis básico de calidad de secuencias
     - Este reporte incluirá una vista consolidada de los controles de calidad realizados en los archivos FASTQ y BAM.
       ![Upload](CLASE1/images/multiqc4.png)
 
----
-
-## Informe final
-
-Al final del práctico, deberás entregar un informe que incluya:
-
-1. Capturas de pantalla o enlaces a los reportes de **FASTQC**, **BAMQC** y **MultiQC**.
-2. Resumen de la calidad de los archivos FASTQ (identificar si existen problemas significativos).
-3. Resultados del análisis BAMQC (cobertura en los sitios BRCA1/2).
-4. Comentarios sobre el reporte consolidado de MultiQC.
 
 ---
 
@@ -103,13 +93,10 @@ Para profundizar en los resultados obtenidos en el análisis, responde las sigui
 1. **¿Cuál fue el porcentaje de lecturas con calidad superior a Q30 en los archivos FASTQ?**  
    Analiza cuántas de las lecturas presentan una calidad alta (Q30 o superior) según el reporte de FASTQC. Explica si este porcentaje es adecuado para el análisis posterior.
 
-2. **¿Cuál fue el porcentaje de lecturas con calidad inferior a Q20?**  
-   Identifica el porcentaje de lecturas con calidad baja y comenta qué impacto podría tener en los resultados del análisis.
-
-3. **¿El contenido GC de las secuencias está dentro de los rangos esperados?**  
+2. **¿El contenido GC de las secuencias está dentro de los rangos esperados?**  
    Compara el contenido GC del reporte FASTQC con los valores esperados para tu muestra. ¿Podrías explicar alguna desviación significativa en el contenido GC?
 
-4. **¿Cuántas lecturas se duplicaron según FASTQC?**  
+3. **¿Cuántas lecturas se duplicaron según FASTQC?**  
    Revisa el reporte de duplicación de secuencias. ¿Qué porcentaje de lecturas son duplicadas y cómo puede esto afectar el análisis posterior?
 
 5. **¿Qué porcentaje de lecturas se alinearon correctamente en el archivo BAM?**  
@@ -121,13 +108,10 @@ Para profundizar en los resultados obtenidos en el análisis, responde las sigui
 7. **¿Qué porcentaje de bases está cubierto con al menos 30 lecturas en los sitios BRCA1/2?**  
    Investiga la cobertura de bases en los sitios críticos. ¿El porcentaje de bases cubiertas con al menos 30 lecturas es suficiente para detectar mutaciones de forma confiable?
 
-8. **¿Cuántas lecturas en el BAM fueron marcadas como duplicados?**  
-   Verifica cuántas lecturas fueron identificadas como duplicadas en el archivo BAM. ¿El número de duplicados es significativo? ¿Qué implicaciones tiene esto en la calidad de los datos?
+9. **¿Observaste adaptadores de secuenacion en las muestras?**
+    En caso que se hayan encontrado, esto podría afectar la calidad de los resultados.
 
-9. **¿Observaste algún sesgo en la posición de las lecturas (por ejemplo, acumulación de lecturas al principio o al final)?**  
-   Usa los gráficos de distribución de calidad por posición del informe de FASTQC para comentar si hay sesgos en el mapeo o la calidad de las lecturas a lo largo de sus posiciones.
-
-10. **¿Cómo se compara el reporte consolidado de MultiQC con los resultados individuales de FASTQC y BAMQC?**  
+11. **¿Cómo se compara el reporte consolidado de MultiQC con los resultados individuales de FASTQC y BAMQC?**  
     Revisa el informe de MultiQC. ¿Los resultados son coherentes con los reportes individuales de FASTQC y BAMQC? ¿Qué información adicional ofrece el reporte consolidado?
 
 ---

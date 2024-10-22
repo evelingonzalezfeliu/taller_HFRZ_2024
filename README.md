@@ -17,6 +17,8 @@ En este práctico vamos a realizar un análisis básico de calidad de secuencias
 2. Un archivo BAM alineado. [Descargar archivo](CLASE1/data/S11.aln.bam)
 3. Un archivo BED con los sitios específicos de BRCA1/2. [Descargar archivo](CLASE1/data/AmpliSeq_BRCA_hg38_new.bed)
 4. Acceso a la plataforma [Galaxy](https://usegalaxy.org/). Para guardar los análisis es necesario crearse una cuenta.
+![Registrarse](CLASE1/images/galaxy1.png)
+
 
 ---
 

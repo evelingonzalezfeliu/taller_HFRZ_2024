@@ -37,6 +37,8 @@ En este práctico vamos a realizar un análisis básico de calidad de secuencias
     - Ejecuta FASTQC para cada uno de los archivos `fastq.gz`.
     - Asegúrate de guardar los reportes generados.
       ![Upload](CLASE1/images/galaxy3.png)
+    - Crear espacio de trabajo para cada muestra. 
+      ![Upload](CLASE1/images/galaxy4.png)
      
 
 3. **Visualización de resultados**:

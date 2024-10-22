@@ -13,10 +13,10 @@ En este práctico vamos a realizar un análisis básico de calidad de secuencias
 
 ## Material necesario
 
-1. Dos archivos FASTQ comprimidos (`fastq.gz`).
-2. Un archivo BAM alineado.
+1. Dos archivos FASTQ comprimidos (`fastq.gz`). [(Descargar S10_R1)](CLASE1/data/S10.R1.fastq.gz)  [(Descargar S10_R2)](CLASE1/data/S10.R2.fastq.gz)  [(Descargar S9_R1)](CLASE1/data/S9.R1.fastq.gz)  [(Descargar S9_R2)](CLASE1/data/S9.R2.fastq.gz)
+2. Un archivo BAM alineado. [Descargar archivo](CLASE1/data/S11.aln.bam)
 3. Un archivo BED con los sitios específicos de BRCA1/2.
-4. Acceso a la plataforma [Galaxy](https://usegalaxy.org/).
+4. Acceso a la plataforma [Galaxy](https://usegalaxy.org/). Para guardar los análisis es necesario crearse una cuenta.
 
 ---
 
@@ -26,7 +26,7 @@ En este práctico vamos a realizar un análisis básico de calidad de secuencias
 
 1. **Subir los archivos FASTQ**:
     - Ingresar a Galaxy y subir los archivos `fastq.gz` a tu espacio de trabajo. 
-    - Para subir los archivos, haz clic en **Upload Data** y selecciona los dos archivos.
+    - Para subir los archivos, haz clic en **Upload Data** y selecciona el archivo.
 
 2. **Ejecutar FASTQC**:
     - En el panel de herramientas de Galaxy, busca **FASTQC** en la barra de búsqueda.

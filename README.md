@@ -56,11 +56,16 @@ En este práctico vamos a realizar un análisis básico de calidad de secuencias
 
 2. **Ejecutar BAMQC**:
     - Busca **BAMQC** en el panel de herramientas de Galaxy.
+      ![Upload](CLASE1/images/bamqc1.png)
     - Configura BAMQC para ejecutar el análisis utilizando el archivo `bam` y selecciona el archivo `bed` correspondiente a BRCA1/2 para analizar los sitios específicos.
     - Ejecuta la herramienta.
+    ![Upload](CLASE1/images/bamqc2.png)
+
+    ![Upload](CLASE1/images/bamqc3.png)
 
 3. **Visualización de resultados**:
     - Una vez que el análisis haya finalizado, revisa el informe generado por BAMQC. En este análisis, podrás observar la cobertura en los sitios de BRCA1/2 y otros parámetros relevantes del alineamiento.
+      ![Upload](CLASE1/images/bamqc4.png)
 
 ### 3. Consolidación de reportes con MultiQC
 

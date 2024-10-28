@@ -55,16 +55,21 @@ Ambas herramientas generan archivos VCF que podemos comparar y visualizar en IGV
 ### 3. Llamado de variantes con Strelka
 
 1. En Galaxy, busca la herramienta **Strelka**.
-2. Selecciona el archivo BAM como entrada.
-3. Configura los parámetros y ejecuta Strelka.
-4. Guarda el archivo VCF generado.
+3. Selecciona el archivo BAM como entrada.
+4. Configura los parámetros y ejecuta Strelka.
+5. Guarda el archivo VCF generado.
 
 ### 4. Llamado de variantes con DeepVariant
 
 1. Busca **DeepVariant** en Galaxy.
-2. Selecciona el archivo BAM.
-3. Configura los parámetros y ejecuta DeepVariant.
-4. Descarga o guarda el archivo VCF generado.
+   
+3. Cargar en galaxy los archivos de entrada (BAM y BED)
+   ![Upload](CLASE1/images/deepvariant1.png)
+   ![Upload](CLASE1/images/deepvariant2.png)
+5. Configura los parámetros y ejecuta DeepVariant.
+   ![Upload](CLASE1/images/deepvariant3.png)
+   ![Upload](CLASE1/images/deepvariant4.png)
+7. Descarga o guarda el archivo VCF generado.
 
 ### 5. Comparación de variantes
 

@@ -49,19 +49,7 @@ Ambas herramientas generan archivos VCF que podemos comparar y visualizar en IGV
      - Un archivo BAM alineado. [Descargar archivo](CLASE1/data/S11.aln.bam)
      - Un archivo BED con los sitios específicos de BRCA1/2. [Descargar archivo](CLASE1/data/AmpliSeq_BRCA_hg38_new.bed)
 
-### 2. Preprocesamiento de datos
-
-1. Alinea los datos al genoma de referencia usando una herramienta de alineación (por ejemplo, BWA).
-2. Guarda el archivo BAM resultante de la alineación.
-
-### 3. Llamado de variantes con Strelka
-
-1. En Galaxy, busca la herramienta **Strelka**.
-3. Selecciona el archivo BAM como entrada.
-4. Configura los parámetros y ejecuta Strelka.
-5. Guarda el archivo VCF generado.
-
-### 4. Llamado de variantes con DeepVariant
+### 2. Llamado de variantes con DeepVariant
 
 1. Busca **DeepVariant** en Galaxy.
    ![Upload](CLASE1/images/deepvariant.png)
@@ -82,7 +70,14 @@ Ambas herramientas generan archivos VCF que podemos comparar y visualizar en IGV
 - **QUAL**: Calidad de la llamada.
 - **INFO**: Información adicional (por ejemplo, profundidad de cobertura y frecuencia alélica).
 
-### 5. Comparación de variantes
+### 3. Llamado de variantes con Strelka
+
+1. En Galaxy, busca la herramienta **Strelka**.
+3. Selecciona el archivo BAM como entrada.
+4. Configura los parámetros y ejecuta Strelka.
+5. Guarda el archivo VCF generado.
+
+### 4. Comparación de variantes
 
 Para comparar las variantes detectadas por Strelka y DeepVariant en la misma muestra, sigue estos pasos:
 
@@ -93,19 +88,20 @@ Para comparar las variantes detectadas por Strelka y DeepVariant en la misma mue
    - Las variantes **compartidas** representan aquellas que ambos métodos detectaron.
    - Las variantes **exclusivas** pueden deberse a diferencias en la sensibilidad y especificidad de cada método.
 
-### 6. Visualización en IGV
+### 5. Visualización en IGV
 
 #### Instalación y Configuración de IGV
 
 1. Descarga IGV desde [IGV Download](https://software.broadinstitute.org/software/igv/download) e instálalo.
-2. Abre IGV y carga el genoma de referencia.
+2. Descarga la carpeta de drive compartida [drive](https://drive.google.com/drive/folders/1AsFH0l6Q2Hf9og-7FPUAwGZpyhCdeV04?usp=drive_link)
+3. Abre IGV y carga el genoma de referencia. **hs38DH.fa**
 
 #### Visualización de variantes
 
 1. Carga los archivos VCF de Strelka y DeepVariant en IGV:
    - Selecciona **File > Load from File** y elige cada archivo VCF.
 2. Navega a las regiones con variantes detectadas y compara la visualización de las variantes en cada archivo.
-3. Observa y anota las diferencias en la cobertura y la calidad de las variantes.
+4. Carga las muestras LV y PP, y observa las posición chr17	43093425. Observa y anota las diferencias en la cobertura y la calidad de las variantes.
 
 #### Comparación Final
 

@@ -72,6 +72,14 @@ Ambas herramientas generan archivos VCF que podemos comparar y visualizar en IGV
 7. Descarga o guarda el archivo VCF generado.
    ![Upload](CLASE1/images/deepvariant5.png)
 
+8. Interpretación de Resultados.Los campos clave en un VCF incluyen:
+- **CHROM**: Cromosoma de la variante.
+- **POS**: Posición de la variante.
+- **REF**: Base de referencia.
+- **ALT**: Base alternativa.
+- **QUAL**: Calidad de la llamada.
+- **INFO**: Información adicional (por ejemplo, profundidad de cobertura y frecuencia alélica).
+
 ### 5. Comparación de variantes
 
 Para comparar las variantes detectadas por Strelka y DeepVariant en la misma muestra, sigue estos pasos:
@@ -96,19 +104,6 @@ Para comparar las variantes detectadas por Strelka y DeepVariant en la misma mue
    - Selecciona **File > Load from File** y elige cada archivo VCF.
 2. Navega a las regiones con variantes detectadas y compara la visualización de las variantes en cada archivo.
 3. Observa y anota las diferencias en la cobertura y la calidad de las variantes.
-
-### 7. Interpretación de Resultados
-
-#### Campos importantes en un archivo VCF
-
-Los campos clave en un VCF incluyen:
-
-- **CHROM**: Cromosoma de la variante.
-- **POS**: Posición de la variante.
-- **REF**: Base de referencia.
-- **ALT**: Base alternativa.
-- **QUAL**: Calidad de la llamada.
-- **INFO**: Información adicional (por ejemplo, profundidad de cobertura y frecuencia alélica).
 
 #### Comparación Final
 

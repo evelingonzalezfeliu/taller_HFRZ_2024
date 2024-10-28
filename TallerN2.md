@@ -43,9 +43,11 @@ Ambas herramientas generan archivos VCF que podemos comparar y visualizar en IGV
 
 ### 1. Subida de datos a Galaxy
 
-1. Inicia sesión en Galaxy.
+1. Inicia sesión en Galaxy. [Galaxy](https://usegalaxy.org/). 
 2. Selecciona **Upload Data** en el panel izquierdo.
-3. Carga tus archivos de datos de secuenciación en formato FASTQ o BAM.
+3. Carga tus archivos:
+     - Un archivo BAM alineado. [Descargar archivo](CLASE1/data/S11.aln.bam)
+     - Un archivo BED con los sitios específicos de BRCA1/2. [Descargar archivo](CLASE1/data/AmpliSeq_BRCA_hg38_new.bed)
 
 ### 2. Preprocesamiento de datos
 

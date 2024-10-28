@@ -70,6 +70,7 @@ Ambas herramientas generan archivos VCF que podemos comparar y visualizar en IGV
    ![Upload](CLASE1/images/deepvariant3.png)
    ![Upload](CLASE1/images/deepvariant4.png)
 7. Descarga o guarda el archivo VCF generado.
+   ![Upload](CLASE1/images/deepvariant5.png)
 
 ### 5. Comparación de variantes
 

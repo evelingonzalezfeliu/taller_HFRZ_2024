@@ -62,7 +62,7 @@ Ambas herramientas generan archivos VCF que podemos comparar y visualizar en IGV
 ### 4. Llamado de variantes con DeepVariant
 
 1. Busca **DeepVariant** en Galaxy.
-   
+   ![Upload](CLASE1/images/deepvariant.png)
 3. Cargar en galaxy los archivos de entrada (BAM y BED)
    ![Upload](CLASE1/images/deepvariant1.png)
    ![Upload](CLASE1/images/deepvariant2.png)

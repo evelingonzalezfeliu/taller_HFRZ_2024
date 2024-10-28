@@ -77,7 +77,26 @@ Ambas herramientas generan archivos VCF que podemos comparar y visualizar en IGV
 4. Configura los parámetros y ejecuta Strelka.
 5. Guarda el archivo VCF generado.
 
-### 4. Comparación de variantes
+### 4. Visualización en IGV
+
+#### Instalación y Configuración de IGV
+
+1. Descarga IGV desde [IGV Download](https://software.broadinstitute.org/software/igv/download) e instálalo.
+2. Descarga la carpeta de drive compartida [drive](https://drive.google.com/drive/folders/1AsFH0l6Q2Hf9og-7FPUAwGZpyhCdeV04?usp=drive_link)
+3. Abre IGV y carga el genoma de referencia. **hs38DH.fa**
+   ![Upload](CLASE1/images/igv1.png)
+   ![Upload](CLASE1/images/igv2.png)
+
+#### Visualización de variantes
+
+1. Carga los archivos VCF de Strelka y DeepVariant en IGV:
+   - Selecciona **File > Load from File** y elige cada archivo VCF.
+2. Navega a las regiones con variantes detectadas y compara la visualización de las variantes en cada archivo.
+   ![Upload](CLASE1/images/igv3.png)
+4. Carga las muestras LV y PP, y observa las posición chr17	43093425. Observa y anota las diferencias en la cobertura y la calidad de las variantes.
+   ![Upload](CLASE1/images/igv4.png)
+
+### 5. Comparación de variantes
 
 Para comparar las variantes detectadas por Strelka y DeepVariant en la misma muestra, sigue estos pasos:
 
@@ -87,21 +106,6 @@ Para comparar las variantes detectadas por Strelka y DeepVariant en la misma mue
 3. **Interpretar los resultados**:
    - Las variantes **compartidas** representan aquellas que ambos métodos detectaron.
    - Las variantes **exclusivas** pueden deberse a diferencias en la sensibilidad y especificidad de cada método.
-
-### 5. Visualización en IGV
-
-#### Instalación y Configuración de IGV
-
-1. Descarga IGV desde [IGV Download](https://software.broadinstitute.org/software/igv/download) e instálalo.
-2. Descarga la carpeta de drive compartida [drive](https://drive.google.com/drive/folders/1AsFH0l6Q2Hf9og-7FPUAwGZpyhCdeV04?usp=drive_link)
-3. Abre IGV y carga el genoma de referencia. **hs38DH.fa**
-
-#### Visualización de variantes
-
-1. Carga los archivos VCF de Strelka y DeepVariant en IGV:
-   - Selecciona **File > Load from File** y elige cada archivo VCF.
-2. Navega a las regiones con variantes detectadas y compara la visualización de las variantes en cada archivo.
-4. Carga las muestras LV y PP, y observa las posición chr17	43093425. Observa y anota las diferencias en la cobertura y la calidad de las variantes.
 
 #### Comparación Final
 

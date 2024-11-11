@@ -43,10 +43,10 @@ CGI es una herramienta bioinformática que ayuda a interpretar variantes somáti
 
 ---
 
-### **Paso a Paso: Anotación en ANNOVAR Online**
+### **Paso a Paso: Anotación en wANNOVAR**
 
-1. **Acceder a ANNOVAR Online**  
-   - Visita [ANNOVAR Online](http://wannovar.wglab.org/).  
+1. **Acceder a wANNOVAR**  
+   - Visita [wANNOVAR](http://wannovar.wglab.org/).  
 
 2. **Subir el archivo VCF**  
    - En la página principal, haz clic en **"Choose File"** y selecciona tu archivo **VCF**.  
@@ -54,10 +54,17 @@ CGI es una herramienta bioinformática que ayuda a interpretar variantes somáti
      - Selecciona las bases de datos que deseas usar (ClinVar, gnomAD, REVEL, etc.).  
      - Especifica el formato de salida.  
    - Haz clic en **"Run ANNOVAR"**.
+     ![Upload](CLASE1/images/annovar1.png)
+     ![Upload](CLASE1/images/annovar2.png)
+     ![Upload](CLASE1/images/annovar3.png)
 
 3. **Revisar y Descargar Resultados**  
    - Una vez finalizado el análisis, revisa las variantes anotadas.  
    - Descarga los resultados en formato **Excel** o **CSV**.  
+     ![Upload](CLASE1/images/annovar4.png)
+     ![Upload](CLASE1/images/annovar5.png)
+     ![Upload](CLASE1/images/annovar6.png)
+
 
 ---
 
@@ -76,13 +83,16 @@ CGI es una herramienta bioinformática que ayuda a interpretar variantes somáti
 
 2. **Buscar Variantes Anotadas**  
    - Utiliza las variantes identificadas previamente en **CGI** o **ANNOVAR**.  
-   - Ingresa cada variante en la barra de búsqueda de OncoKB.  
+   - Ingresa cada variante en la barra de búsqueda de OncoKB.
+     ![Upload](CLASE1/images/oncokb1.png)
 
 3. **Revisar la Clasificación Clínica**  
    - OncoKB clasifica las variantes en diferentes niveles:  
      - **Terapéuticamente accionables** (niveles 1-4).  
      - **De relevancia diagnóstica o pronóstica**.  
-     - **Sin impacto clínico conocido**.  
+     - **Sin impacto clínico conocido**.
+       ![Upload](CLASE1/images/oncokb2.png)
+       ![Upload](CLASE1/images/oncokb3.png)
 
 4. **Documentar los Resultados**  
    - Guarda capturas de pantalla o exporta los resultados relevantes.  

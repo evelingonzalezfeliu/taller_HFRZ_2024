@@ -20,14 +20,19 @@ CGI es una herramienta bioinformática que ayuda a interpretar variantes somáti
    - Dirígete a [https://www.cancergenomeinterpreter.org](https://www.cancergenomeinterpreter.org).  
    - Crea una cuenta o inicia sesión.  
 
-2. **Subir el archivo VCF**  
-   - Ve a **"Somatic Mutations"** o **"Germline Mutations"** (según el tipo de variante).  
-   - Haz clic en **"Upload your file"** y selecciona tu archivo **VCF**.  
-   - Configura las opciones de anotación y haz clic en **"Submit"**.
+2. **Subir el archivo VCF**    
+   - Haz clic en **"Add file +"** y selecciona tu archivo **VCF**.  
+   - Configura las opciones de anotación que se observan en la imagen y haz clic en **"Run"**.
+     ![Upload](CLASE1/images/cgi1.png)
+   - Se iniciará la anotación de la variantes presentes en el archivo VCF
+     ![Upload](CLASE1/images/cgi2.png)
+
 
 3. **Revisar y Exportar Resultados**  
    - Revisa el informe generado: impacto funcional, relevancia clínica y terapias asociadas.  
-   - Descarga el informe en **PDF** o **Excel** para documentar.  
+   - Descarga el los resulttados y cargalos en **Excel** para documentar.
+     ![Upload](CLASE1/images/cgi3.png)
+     ![Upload](CLASE1/images/cgi4.png)
 
 ---
 

@@ -158,72 +158,38 @@ Para la ejecucion del pipeline en Nextflow para la identificación de variantes 
  - 5) Ejecución de pipeline.
   
 ### 3.1 **Conectarse al cluster HPC de la universidad.**
+   ```
+      ssh efeliu@172.16.105.104
+   ```
 ### 3.2 **Acceder a la carpeta de trabajo BRCA.**
+   ```
+      cd /mnt/beegfs/home/efeliu/work2024/080524_nextflow_BRCA/BRCA
+   ```
 ### 3.3 **Agregar carpeta de salida en el archivo de configuracion**
+   ```
+   nano nextflow.config
+   ```
+   ```
+   params {
+   csv = null
+   debug = false
+   outdir = "CARPETA_SALIDA" ### Cambiar "CARPETA_SALIDA" por otro nomvr
+   ```
+
 ### 3.4 **Crear archivo de entrada --csv**
+   ```
+   nano ../readsHRR_1-4.csv
+   ```
+   ```
+   sampleId,part,read1,read2
+   AL,0,AL_S9.R1.fastq.gz,AL_S9.R2.fastq.gz
+   DC,0,DC_S14.R1.fastq.gz,DC_S14.R2.fastq.gz
+   JC,0,JC_S13.R1.fastq.gz,JC_S13.R2.fastq.gz
+   ```
+
 ### 3.5 **Ejecución de pipeline.**
 ```
 nextflow run main.nf -c nextflow.config -profile kutral -params-file ../params-brca.yml --csv ../readsHRR_parte2.csv -resume
 ```
 
- - ```-c nextflow.config```
-Nextflow se puede personalizar utilizando un archivo de configuración (nextflow.config). Este archivo define recursos, parámetros y opciones para la ejecución del pipeline.
-
-Ejemplo de archivo nextflow.config básico:
-```
-params {
-    input = 'data/*.fastq'
-    output = 'results'  ### carpeta de salida
-}
-
-process {
-    cpus = 2  ## número de CPUs
-    memory = '4 GB'  ## memoria RAM asignada
-    time = '2h' ## limite de tiempo
-}
-
-executor {
-    name = 'local' // Usa el entorno local para la ejecución
-    queueSize = 10
-}
-```
-
-Estructura de un pipeline
-Un pipeline en Nextflow se define mediante un archivo de script, normalmente llamado main.nf. Este archivo contiene los procesos (pasos) y cómo se conectan entre sí.
-
-Ejemplo básico de un script main.nf:
-
-```
-Copiar código
-#!/usr/bin/env nextflow
-
-params.input = 'data/*.fastq'
-params.output = 'results'
-
-process ALIGN {
-    input:
-    path fastq from file(params.input)
-
-    output:
-    path 'aligned.bam' into aligned_files
-
-    script:
-    """
-    bwa mem reference.fa $fastq > aligned.bam
-    """
-}
-
-process SORT {
-    input:
-    path bam_file from aligned_files
-
-    output:
-    path 'sorted.bam'
-
-    script:
-    """
-    samtools sort $bam_file > sorted.bam
-    """
-}
-````
 

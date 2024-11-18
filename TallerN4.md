@@ -148,22 +148,38 @@ Eliminar un directorio y su contenido:
    
 **(Lee la descripción del comando 'ls', presiona 'q' para salir)**
 
-3. Ejecución del Pipeline BRCA en Nextflow
-   
-2. Configuración básica
+## 3. **Ejecución del Pipeline BRCA en Nextflow.**
+
+Para la ejecucion del pipeline en Nextflow para la identificación de variantes de BRCA1/2, es necesario conectar el 
+ - 1) Conectarse al cluster HPC de la universidad.
+ - 2) Acceder a la carpeta de trabajo BRCA.
+ - 3) Agregar carpeta de salida en el archivo de configuracion ```nextflow.config``` 
+ - 4) Crear archivo de entrada ```--csv ../readsHRR_parte2.csv``` 
+ - 5) Ejecución de pipeline.
+  
+### 3.1 **Conectarse al cluster HPC de la universidad.**
+### 3.2 **Acceder a la carpeta de trabajo BRCA.**
+### 3.3 **Agregar carpeta de salida en el archivo de configuracion**
+### 3.4 **Crear archivo de entrada --csv**
+### 3.5 **Ejecución de pipeline.**
+```
+nextflow run main.nf -c nextflow.config -profile kutral -params-file ../params-brca.yml --csv ../readsHRR_parte2.csv -resume
+```
+
+ - ```-c nextflow.config```
 Nextflow se puede personalizar utilizando un archivo de configuración (nextflow.config). Este archivo define recursos, parámetros y opciones para la ejecución del pipeline.
 
 Ejemplo de archivo nextflow.config básico:
 ```
 params {
     input = 'data/*.fastq'
-    output = 'results'
+    output = 'results'  ### carpeta de salida
 }
 
 process {
-    cpus = 2
-    memory = '4 GB'
-    time = '2h'
+    cpus = 2  ## número de CPUs
+    memory = '4 GB'  ## memoria RAM asignada
+    time = '2h' ## limite de tiempo
 }
 
 executor {
@@ -171,7 +187,6 @@ executor {
     queueSize = 10
 }
 ```
-Guarda este archivo en el directorio donde ejecutarás tu pipeline.
 
 Estructura de un pipeline
 Un pipeline en Nextflow se define mediante un archivo de script, normalmente llamado main.nf. Este archivo contiene los procesos (pasos) y cómo se conectan entre sí.
@@ -211,9 +226,4 @@ process SORT {
     """
 }
 ````
-Comando básico: nextflow run
-Para ejecutar un pipeline:
 
-bash
-Copiar código
-nextflow run main.nf

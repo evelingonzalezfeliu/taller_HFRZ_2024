@@ -137,13 +137,13 @@ Eliminar un directorio y su contenido:
 ### 4. **Utilidades**
  - ```nano```: Abre un editor de texto sencillo.
    ```bash
-      Copiar código
       nano documento.txt
+   
  **Edita el archivo, guarda con Ctrl+O y sal con Ctrl+X.**
  
  - ```man```: Muestra el manual de un comando.
+
    ```bash
-      Copiar código
       man ls
    
 **(Lee la descripción del comando 'ls', presiona 'q' para salir)**

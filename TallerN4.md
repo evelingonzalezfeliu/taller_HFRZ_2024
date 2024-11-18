@@ -158,14 +158,17 @@ Para la ejecucion del pipeline en Nextflow para la identificación de variantes 
  - 5) Ejecución de pipeline.
   
 ### 3.1 **Conectarse al cluster HPC de la universidad.**
+Para comenzar es necesario conectarse al nodo de computo donde vamos a ejecutar el pipeline de BRCA1
    ```
       ssh efeliu@172.16.105.104
    ```
 ### 3.2 **Acceder a la carpeta de trabajo BRCA.**
+Una vez conectados, necesitamos acceder a la carpeta donde se encuentra el pipeline instalado.
    ```
       cd /mnt/beegfs/home/efeliu/work2024/080524_nextflow_BRCA/BRCA
    ```
 ### 3.3 **Agregar carpeta de salida en el archivo de configuracion**
+Antes de ejecutar el pipeline, debemos indicar una carpeta de salida, donde se van a almacenar los resultados. Podemos utilizar ```nano``` para escribir este archivo.
    ```
    nano nextflow.config
    ```
@@ -177,6 +180,8 @@ Para la ejecucion del pipeline en Nextflow para la identificación de variantes 
    ```
 
 ### 3.4 **Crear archivo de entrada --csv**
+Ademas debemos crear un archivo que nos indicará donde se encuentran los archivos fastq.gz que salen de la secuenciación.
+Podemos utilizar ```nano``` para escribir este archivo.
    ```
    nano ../readsHRR_1-4.csv
    ```
@@ -188,8 +193,14 @@ Para la ejecucion del pipeline en Nextflow para la identificación de variantes 
    ```
 
 ### 3.5 **Ejecución de pipeline.**
+Finalmete podemos ejecutar, para iniciar el procesamiento de los datos. Para esto, ejecutamos el siguiente comando.
+ - Activamos el ambiente 
 ```
-nextflow run main.nf -c nextflow.config -profile kutral -params-file ../params-brca.yml --csv ../readsHRR_parte2.csv -resume
+micromamba activate /mnt/beegfs/home/efeliu/micromamba/envs/brca12
+```
+ - Ejecutamos el pipeline
+```
+nextflow run main.nf -c nextflow.config -profile kutral -params-file ../params-brca.yml --csv ../readsHRR_1-4.csv -resume
 ```
 
 

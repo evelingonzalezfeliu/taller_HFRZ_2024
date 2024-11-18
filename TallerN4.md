@@ -56,7 +56,104 @@ La terminal es una interfaz de línea de comandos que permite interactuar direct
 
 ### 1. **Navegación por el sistema de archivos**
 
-#### **`pwd`**: Muestra la ruta del directorio actual.
+ - ```pwd```: Muestra la ruta del directorio actual.
 ```bash
 pwd
 # Salida: /home/usuario/taller_nextflow
+```
+ - ```ls```: Lista los archivos y directorios.
+
+```bash
+ls
+# Salida: documento.txt  directorio1  script.sh
+```
+Opciones útiles:
+
+ - ```ls -l```: Lista con detalles adicionales (permisos, tamaño).
+ - ```ls -a:``` Incluye archivos ocultos.
+ - ```cd```: Cambia de directorio.
+
+```bash
+cd directorio1
+pwd
+# Salida: /home/usuario/taller_nextflow/directorio1
+
+```
+Volver al directorio anterior:
+```bash
+cd ..
+pwd
+# Salida: /home/usuario/taller_nextflow
+```
+
+### 2. **Gestión de archivos**
+   
+```mkdir```: Crea un nuevo directorio.
+```bash
+mkdir datos
+ls
+# Salida: datos  documento.txt  script.sh
+```
+
+touch: Crea un archivo vacío.
+```bash
+touch archivo_nuevo.txt
+ls
+# Salida: archivo_nuevo.txt  datos  documento.txt
+```
+```cp```: Copia archivos o directorios.
+```bash
+cp documento.txt copia_documento.txt
+ls
+# Salida: archivo_nuevo.txt  copia_documento.txt  documento.txt
+```
+```mv```: Mueve o renombra archivos.
+
+```bash
+mv copia_documento.txt documentos_backup/
+```
+Para renombrar:
+
+```bash
+mv archivo_nuevo.txt archivo_renombrado.txt
+```
+
+```rm```: Elimina archivos o directorios.
+
+```bash
+rm archivo_renombrado.txt
+```
+
+Eliminar un directorio y su contenido:
+
+```bash
+rm -r datos/
+```
+### 3. **Visualización de contenido**
+   
+cat: Muestra el contenido completo de un archivo.
+bash
+Copiar código
+cat documento.txt
+# Salida: (contenido del archivo)
+less: Permite navegar por el contenido de un archivo grande.
+bash
+Copiar código
+less documento.txt
+# (Usa las teclas de flecha para desplazarte, presiona 'q' para salir)
+head y tail: Muestra las primeras o últimas líneas de un archivo.
+bash
+Copiar código
+head -n 5 documento.txt  # Primeras 5 líneas
+tail -n 5 documento.txt  # Últimas 5 líneas
+4. Utilidades
+nano: Abre un editor de texto sencillo.
+bash
+Copiar código
+nano documento.txt
+# Edita el archivo, guarda con Ctrl+O y sal con Ctrl+X.
+man: Muestra el manual de un comando.
+bash
+Copiar código
+man ls
+# (Lee la descripción del comando 'ls', presiona 'q' para salir)

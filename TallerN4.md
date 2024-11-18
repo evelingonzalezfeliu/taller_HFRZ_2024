@@ -124,7 +124,6 @@ Eliminar un directorio y su contenido:
 ### 3. **Visualización de contenido**
  - ``cat``: Muestra el contenido completo de un archivo.
    ```bash
-   Copiar código
    cat documento.txt
 
 ### Salida: (contenido del archivo)

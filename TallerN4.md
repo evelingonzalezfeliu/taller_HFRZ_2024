@@ -6,7 +6,6 @@ En este taller, aprenderás los conceptos básicos de Linux y los comandos esenc
 ## Contenidos
 1. **Introducción a Linux**  
    - ¿Qué es Linux?  
-   - Diferencias con otros sistemas operativos.  
    - La terminal: tu herramienta clave.  
 
 2. **Comandos básicos de Linux (con ejemplos)**  
@@ -37,18 +36,7 @@ Linux es un sistema operativo de código abierto, lo que significa que su códig
 - **Distribuciones populares**: Ubuntu, CentOS, Fedora, Debian.
 - **Áreas de uso**: servidores web, supercomputadoras, sistemas de redes, ciencia de datos, bioinformática, entre otros.
 
-### 2. **Diferencias con otros sistemas operativos**
-
-| **Característica**       | **Linux**                          | **Windows**                       | **MacOS**                      |
-|--------------------------|-------------------------------------|-----------------------------------|---------------------------------|
-| **Licencia**             | Código abierto (gratuito)           | Licencia propietaria (pago)       | Licencia propietaria (pago)     |
-| **Personalización**      | Altamente personalizable            | Limitada                          | Limitada                        |
-| **Interfaz**             | Terminal y entornos gráficos        | Mayormente gráfico                | Mayormente gráfico              |
-| **Seguridad**            | Alta, menos vulnerable a virus      | Más susceptible a malware         | Alta                            |
-| **Compatibilidad**       | Ideal para servidores y desarrollo  | Más popular en entornos de oficina | Popular en diseño y multimedia  |
-| **Actualizaciones**      | Frecuentes, personalizables         | Centralizadas                     | Centralizadas                   |
-
-### 3. **La terminal: tu herramienta clave**
+### 2. **La terminal: tu herramienta clave**
 
 La terminal es una interfaz de línea de comandos que permite interactuar directamente con el sistema operativo escribiendo comandos. A diferencia de las interfaces gráficas, la terminal es más poderosa y eficiente para tareas como automatización, manipulación masiva de archivos y ejecución de scripts.
 
@@ -60,6 +48,15 @@ La terminal es una interfaz de línea de comandos que permite interactuar direct
 **Ejemplo de una tarea con terminal**:
 - Crear un directorio, moverse dentro de él, y crear un archivo en pocos pasos:
   ```bash
-  mkdir proyecto
-  cd proyecto
-  touch archivo.txt
+  mkdir RUN_BRCA
+  cd RUN_BRCA
+  touch input.csv
+
+## Comandos básicos de Linux (con ejemplos)
+
+### 1. **Navegación por el sistema de archivos**
+
+#### **`pwd`**: Muestra la ruta del directorio actual.
+```bash
+pwd
+# Salida: /home/usuario/taller_nextflow

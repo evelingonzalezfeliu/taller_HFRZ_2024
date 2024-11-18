@@ -14,11 +14,7 @@ En este taller, aprenderás los conceptos básicos de Linux y los comandos esenc
    - Visualización de contenido.  
    - Utilidades.  
 
-3. **Instalación y Configuración de Nextflow**  
-   - Descarga e instalación.  
-   - Configuración básica.  
-
-4. **Ejecución de un Pipeline en Nextflow**  
+3. **Ejecución del Pipeline BRCA en Nextflow**  
    - Estructura de un pipeline.  
    - Comando básico: `nextflow run`.  
    - Visualización de resultados.  
@@ -151,3 +147,72 @@ Eliminar un directorio y su contenido:
       man ls
    
 **(Lee la descripción del comando 'ls', presiona 'q' para salir)**
+
+3. Ejecución del Pipeline BRCA en Nextflow
+   
+2. Configuración básica
+Nextflow se puede personalizar utilizando un archivo de configuración (nextflow.config). Este archivo define recursos, parámetros y opciones para la ejecución del pipeline.
+
+Ejemplo de archivo nextflow.config básico:
+```
+params {
+    input = 'data/*.fastq'
+    output = 'results'
+}
+
+process {
+    cpus = 2
+    memory = '4 GB'
+    time = '2h'
+}
+
+executor {
+    name = 'local' // Usa el entorno local para la ejecución
+    queueSize = 10
+}
+```
+Guarda este archivo en el directorio donde ejecutarás tu pipeline.
+
+3. Ejecución de un Pipeline en Nextflow
+Estructura de un pipeline
+Un pipeline en Nextflow se define mediante un archivo de script, normalmente llamado main.nf. Este archivo contiene los procesos (pasos) y cómo se conectan entre sí.
+
+Ejemplo básico de un script main.nf:
+groovy
+Copiar código
+#!/usr/bin/env nextflow
+
+params.input = 'data/*.fastq'
+params.output = 'results'
+
+process ALIGN {
+    input:
+    path fastq from file(params.input)
+
+    output:
+    path 'aligned.bam' into aligned_files
+
+    script:
+    """
+    bwa mem reference.fa $fastq > aligned.bam
+    """
+}
+
+process SORT {
+    input:
+    path bam_file from aligned_files
+
+    output:
+    path 'sorted.bam'
+
+    script:
+    """
+    samtools sort $bam_file > sorted.bam
+    """
+}
+Comando básico: nextflow run
+Para ejecutar un pipeline:
+
+bash
+Copiar código
+nextflow run main.nf

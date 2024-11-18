@@ -128,7 +128,7 @@ Eliminar un directorio y su contenido:
    cat documento.txt
 
 ### Salida: (contenido del archivo)
-_ ```less```: Permite navegar por el contenido de un archivo grande.
+- ```less```: Permite navegar por el contenido de un archivo grande.
    ```bash
       less documento.txt
    ```

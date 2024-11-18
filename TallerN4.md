@@ -173,12 +173,12 @@ executor {
 ```
 Guarda este archivo en el directorio donde ejecutarás tu pipeline.
 
-3. Ejecución de un Pipeline en Nextflow
 Estructura de un pipeline
 Un pipeline en Nextflow se define mediante un archivo de script, normalmente llamado main.nf. Este archivo contiene los procesos (pasos) y cómo se conectan entre sí.
 
 Ejemplo básico de un script main.nf:
-groovy
+
+```
 Copiar código
 #!/usr/bin/env nextflow
 
@@ -210,6 +210,7 @@ process SORT {
     samtools sort $bam_file > sorted.bam
     """
 }
+````
 Comando básico: nextflow run
 Para ejecutar un pipeline:
 

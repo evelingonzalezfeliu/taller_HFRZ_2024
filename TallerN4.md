@@ -144,8 +144,8 @@ _ ```less```: Permite navegar por el contenido de un archivo grande.
    ```bash
       Copiar código
       nano documento.txt
-   
-# Edita el archivo, guarda con Ctrl+O y sal con Ctrl+X.
+ **Edita el archivo, guarda con Ctrl+O y sal con Ctrl+X.**
+ 
  - ```man```: Muestra el manual de un comando.
    ```bash
       Copiar código

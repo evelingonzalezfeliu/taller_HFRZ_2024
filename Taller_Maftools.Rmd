@@ -1,0 +1,129 @@
+---
+title: "Taller_maftools"
+author: "Evelin Gonzalez"
+date: "2024-12-09"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introducción a Maftools
+El paquete maftools está diseñado para analizar y visualizar datos de mutaciones somáticas en archivos en formato MAF (Mutation Annotation Format). Este taller guiará a los participantes a través de los pasos básicos para cargar datos, generar resúmenes y realizar visualizaciones informativas.
+
+### Objetivos del Taller
+- Aprender a cargar archivos en formato MAF utilizando datos de ANNOVAR.
+- Explorar resúmenes de variantes somáticas por muestra y por gen.
+- Visualizar datos clave como gráficos de Oncoplots y curvas Ti/Tv.
+- Exportar resultados clave para informes adicionales.
+
+
+```{r plotSummary}
+
+library(maftools) # Carga la librería maftools, utilizada para analizar y visualizar datos de mutaciones en formato MAF.
+
+## CAMBIAR
+setwd("/Users/evelingonzalez/Documents/Di_Genoma_LAB/taller_hospital") # Establece el directorio de trabajo donde se encuentran los archivos necesarios.
+
+filenames.s <- Sys.glob("annovar/*SS*hg38_multianno.txt") # Busca todos los archivos en la carpeta "annovar/" cuyo nombre contiene "SS" y termina en "hg38_multianno.txt".
+
+annovar_mafs.s = lapply(filenames.s, annovarToMaf, table = "ensGene", ens2hugo = FALSE, refBuild = "hg38") # Convierte cada archivo encontrado en filenames.s al formato MAF utilizando annovarToMaf; especifica el uso de "ensGene" y el ensamblaje de referencia "hg38".
+
+annovar.s = data.table::rbindlist(l = annovar_mafs.s, fill = TRUE) # Combina todos los archivos MAF generados en un solo objeto tipo tabla, rellenando valores faltantes si es necesario.
+
+vcNames <- c("Frame_Shift_Del", "Frame_Shift_Ins", "Missense_Mutation", "Nonsense_Mutation", "Silent") # Define una lista de categorías de mutaciones consideradas como variantes no sinónimas.
+
+laml= read.maf(maf = annovar.s, vc_nonSyn = vcNames) # Lee el MAF combinado y genera un resumen utilizando las categorías de mutaciones especificadas.
+
+#write.table(annovar.s, file="ADN_variants.tsv", sep = "\t", row.names = F)
+```
+### Función: getSampleSummary
+
+La función getSampleSummary proporciona un resumen de las variantes detectadas por cada muestra.
+
+```{r getSampleSummary}
+#Shows sample summry.
+getSampleSummary(laml)
+```
+### Función: getGeneSummary
+
+La función getGeneSummary detalla la frecuencia de mutaciones en cada gen dentro del conjunto de datos.
+
+```{r getGeneSummary}
+#Shows gene summary.
+getGeneSummary(laml)
+```
+### Función: getClinicalData
+
+Si el archivo MAF contiene datos clínicos asociados a las muestras, estos pueden visualizarse con getClinicalData.
+
+```{r getClinicalData}
+#shows clinical data associated with samples
+getClinicalData(laml)
+```
+
+### Función: getFields
+
+Para explorar todos los campos disponibles en el archivo MAF, se utiliza la función getFields
+
+```{r getFields}
+#Shows all fields in MAF
+getFields(laml)
+```
+### Función: write.mafSummary
+
+La función write.mafSummary permite guardar los resúmenes generados en archivos externos.
+
+```{r write}
+#Writes maf summary to an output file with basename laml.
+write.mafSummary(maf = laml, basename = 'laml')
+```
+
+### Función: plotProtein
+
+```{r plotProtein}
+plotProtein(gene = "BRCA1") #refSeqID = "NM_007300"
+```
+
+### Función: plotmafSummary
+
+plotmafSummary genera un resumen visual de las mutaciones, como la distribución por tipo de variante.
+
+```{r plotmafSummary}
+plotmafSummary(maf = laml, rmOutlier = TRUE, addStat = 'median', dashboard = TRUE, titvRaw = FALSE)
+```
+
+### Función: oncoplot
+
+Un Oncoplot muestra las mutaciones más frecuentes en los genes principales.
+
+```{r oncoplot}
+#oncoplot for top ten mutated genes.
+oncoplot(maf = laml)
+```
+
+### Función: plotTiTv
+
+plotTiTv visualiza la proporción de transiciones y transversiones en las variantes.En el contexto de las variantes genéticas, las transiciones y transversiones son tipos específicos de sustituciones de bases en el ADN:
+
+- Transiciones (Ti): Son sustituciones entre bases del mismo tipo químico: 
+    -   Purina ↔ Purina (Adenina ↔ Guanina, A ↔ G)
+    -   Pirimidina ↔ Pirimidina (Citosina ↔ Timina, C ↔ T)
+
+- Transversiones (Tv): Son sustituciones entre bases de tipos químicos distintos:
+    -   Purina ↔ Pirimidina (Adenina o Guanina ↔ Citosina o Timina)
+
+```{r plotTiTv}
+laml.titv = titv(maf = laml, plot = FALSE, useSyn = TRUE)
+#plot titv summary
+plotTiTv(res = laml.titv)
+```
+
+### Función: tcgaCompare
+
+```{r tcgaCompare}
+
+laml.mutload = tcgaCompare(maf = laml, cohortName = 'BRCA_CHI', logscale = TRUE, capture_size = 50)
+
+```

@@ -101,6 +101,22 @@ Un Oncoplot muestra las mutaciones más frecuentes en los genes principales.
 ```{r oncoplot}
 #oncoplot for top ten mutated genes.
 oncoplot(maf = laml)
+
+#vc_cols = RColorBrewer::brewer.pal(n = 8, name = 'Paired')
+#names(vc_cols) = c(
+#  'Frame_Shift_Del',
+#  'Missense_Mutation',
+#  'Nonsense_Mutation',
+#  'Multi_Hit',
+#  'Frame_Shift_Ins',
+#  'In_Frame_Ins',
+#  'Splice_Site',
+#  'In_Frame_Del'
+#)
+
+#png(file="oncoplot.png", width=6, height=4, res=300, unit = "in")
+#oncoplot(laml, showTumorSampleBarcodes = FALSE ,SampleNamefontSize = 0.4, legendFontSize = 1.5,top = 100, drawColBar=TRUE, colors = vc_cols, sortByAnnotation = TRUE)
+#dev.off()
 ```
 
 ### Función: plotTiTv

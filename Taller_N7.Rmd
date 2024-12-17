@@ -1,0 +1,299 @@
+---
+title: "Taller Práctico: Análisis de Clustering, PCA y Categorización de Variantes"
+author: ""
+date: ""
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+---
+
+# Introducción
+
+En este taller, aprenderás a realizar análisis de clustering y PCA en un conjunto de datos obtenidos de un archivo MAF (Mutation Annotation Format) y a categorizar variantes patogénicas. También exploraremos la visualización de resultados mediante mapas de calor y gráficos interactivos. Usaremos `R` para realizar estos análisis.
+
+# Preparación del Entorno
+
+Antes de comenzar, asegúrate de tener instalado R y RStudio. También necesitas instalar los siguientes paquetes:
+
+```{r r1, echo=FALSE, warning=FALSE}
+#chooseCRANmirror()  # Esto abrirá una ventana donde puedes seleccionar un espejo
+
+#install.packages(c("ggplot2", "factoextra", "pheatmap", "cluster", "dplyr", "maftools"))
+```
+
+# Datos de Ejemplo
+
+Vamos a utilizar un archivo MAF que contiene información sobre variantes genéticas de varias muestras. Este archivo debe cargarse y procesarse para los análisis.
+
+Carguemos el archivo MAF utilizando el paquete `maftools`:
+
+```{r r2, warning=FALSE}
+library(maftools) # Carga la librería maftools, utilizada para analizar y visualizar datos de mutaciones en formato MAF.
+
+## CAMBIAR
+setwd("/Users/evelingonzalez/Documents/Di_Genoma_LAB/taller_hospital") # Establece el directorio de trabajo donde se encuentran los archivos necesarios.
+
+filenames.s <- Sys.glob("annovar/*SS*hg38_multianno.txt") # Busca todos los archivos en la carpeta "annovar/" cuyo nombre contiene "SS" y termina en "hg38_multianno.txt".
+
+annovar_mafs.s = lapply(filenames.s, annovarToMaf, table = "ensGene", ens2hugo = FALSE, refBuild = "hg38") # Convierte cada archivo encontrado en filenames.s al formato MAF utilizando annovarToMaf; especifica el uso de "ensGene" y el ensamblaje de referencia "hg38".
+
+annovar.s = data.table::rbindlist(l = annovar_mafs.s, fill = TRUE) # Combina todos los archivos MAF generados en un solo objeto tipo tabla, rellenando valores faltantes si es necesario.
+
+vcNames <- c("Frame_Shift_Del", "Frame_Shift_Ins", "Missense_Mutation", "Nonsense_Mutation", "Silent") # Define una lista de categorías de mutaciones consideradas como variantes no sinónimas.
+
+#maf= read.maf(maf = annovar.s, vc_nonSyn = vcNames) # Lee el MAF combinado y genera un resumen utilizando las categorías de mutaciones especificadas.
+
+#write.table(annovar.s, file="ADN_variants.tsv", sep = "\t", row.names = F)
+```
+
+El archivo MAF contiene datos como IDs de muestras, genes afectados, tipos de variantes y anotaciones de impacto.
+
+```{r PCA1, warning=FALSE}
+# Cargar librerías necesarias para el análisis
+library(tidyverse)   # Para manipulación y transformación de datos
+library(factoextra)  # Para visualización de resultados de PCA y clustering
+library(FactoMineR)  # Para realizar análisis de componentes principales (PCA)
+
+# Filtrar variantes que tienen información en la columna 'aaChange'
+variantes <- annovar.s[!is.na(annovar.s$aaChange),] 
+
+# Extraer la información del genotipo (GT) desde la columna 'Otherinfo13', separándola en un nuevo campo
+variantes <- variantes %>% separate(Otherinfo13, c("GT"), "[:]")
+
+# Dividir la información de GT en dos alelos, 'A1' y 'A2'
+variantes <- variantes %>% separate(GT, c("A1","A2"), "[/||]")
+
+# Calcular la suma de los dos alelos (A1 y A2) para cada variante
+variantes$sum <- as.numeric(variantes$A1) + as.numeric(variantes$A2)
+
+# Eliminar variantes que no tienen anotación en la base de datos 'gnomAD'
+variantes <- variantes[variantes$gnomad40_genome_AF != ".",]
+
+# Agrupar las variantes por el campo 'aaChange' y las frecuencias alélicas por poblaciones,
+# luego sumar los valores en la columna 'sum' dentro de cada grupo
+variantes_suma <- variantes %>%
+  group_by(
+    aaChange,                        # Cambio en la secuencia de aminoácidos
+    gnomad40_genome_AF_afr,          # Frecuencia alélica en población africana
+    gnomad40_genome_AF_amr,          # Frecuencia alélica en población americana
+    gnomad40_genome_AF_ami,          # Frecuencia alélica en amerindios
+    gnomad40_genome_AF_asj,          # Frecuencia alélica en población judía Ashkenazi
+    gnomad40_genome_AF_eas,          # Frecuencia alélica en población de Asia Oriental
+    gnomad40_genome_AF_sas,          # Frecuencia alélica en población del sur de Asia
+    gnomad40_genome_AF_fin,          # Frecuencia alélica en población finlandesa
+    gnomad40_genome_AF_mid,          # Frecuencia alélica en Medio Oriente
+    gnomad40_genome_AF_nfe,          # Frecuencia alélica en población europea no finlandesa
+    gnomad40_genome_AF_XX            # Frecuencia alélica en cromosomas sexuales
+  ) %>%
+  summarise(total_sum = sum(sum, na.rm = TRUE), .groups = 'drop') # Sumar valores por grupo y eliminar agrupación
+
+# Eliminar la columna 'sum' ya que no se necesita en este punto
+variantes_suma$sum <- NULL
+
+# Calcular la frecuencia alélica promedio para cada variante, dividiendo por el número de muestras (32 en este caso)
+variantes_suma$AF <- variantes_suma$total_sum /48
+
+# Eliminar la columna 'total_sum' ya que se reemplazó por 'AF'
+variantes_suma$total_sum <- NULL
+
+# Convertir la columna 'AF' a valores numéricos (por seguridad)
+variantes_suma$AF <- as.numeric(variantes_suma$AF)
+
+# Renombrar las columnas para facilitar el manejo en análisis posteriores
+colnames(variantes_suma) <- c(
+  "aaChange", "afr", "amr", "ami", "asj", "eas", "sas", 
+  "fin", "mid", "nfe", "XX", "chi"  # Última columna corresponde a la población chilena
+)
+
+# Convertir las columnas de frecuencias alélicas a valores numéricos
+variantes_suma <- variantes_suma %>%
+  mutate_at(c("afr", "amr", "ami", "asj", "eas", "sas", 
+              "fin", "mid", "nfe", "XX", "chi"), as.numeric)
+
+# Convertir la tabla de frecuencias a un formato adecuado para el PCA
+# Transponer la tabla excluyendo la columna 'aaChange' (primer columna)
+data_pca_df <- t(as.data.frame(variantes_suma[,-1]))
+
+# Asignar los nombres de las variantes (aaChange) como nombres de columnas
+colnames(data_pca_df) <- variantes_suma[[1]]
+
+# Ahora 'data_pca_df' está listo para ser usado en el análisis de PCA
+```
+
+# 1. Análisis de Componentes Principales (PCA)
+
+### ¿Qué es el PCA?
+
+El Análisis de Componentes Principales (PCA) es una técnica de reducción de dimensionalidad que se utiliza para identificar patrones en datos de alta dimensionalidad. Al transformar las variables originales en nuevas variables (componentes principales), el PCA permite representar la mayor parte de la variabilidad de los datos en un espacio reducido, facilitando su visualización y análisis.
+
+El PCA es ampliamente utilizado en genómica para:
+
+-   Identificar patrones de variabilidad en mutaciones genéticas.
+-   Visualizar relaciones entre muestras en datos genómicos.
+-   Detectar grupos subyacentes o diferencias entre subpoblaciones.
+
+### Pasos:
+
+1.  Normalizar los datos.
+2.  Realizar el PCA.
+3.  Visualizar los resultados.
+
+```{r PCA2, warning=FALSE}
+# Realizar un análisis de componentes principales (PCA) usando la función PCA del paquete FactoMineR.
+# Argumentos clave:
+# - data_pca_df: La matriz de datos con las frecuencias alélicas por población.
+# - ncp: Número de componentes principales que se calculan (aquí 4).
+# - graph: Si se genera un gráfico por defecto. FALSE para desactivar esta opción.
+# - scale.unit: Escala las variables para que tengan media 0 y varianza 1. Esto asegura que todas las variables
+#   contribuyan por igual al PCA, independientemente de sus escalas iniciales.
+res2.pca <- PCA(data_pca_df, ncp = 4, graph = FALSE, scale.unit = TRUE)
+
+# Generar un gráfico biplot del PCA usando la función fviz_pca_ind del paquete factoextra.
+# Argumentos clave:
+# - res2.pca: El objeto generado por el análisis PCA.
+# - repel: Si los nombres de las muestras deben evitar superponerse en el gráfico.
+# - col.ind: El color de los puntos que representan las muestras (aquí gris oscuro).
+# - title: El título del gráfico. Aquí está vacío para dejar espacio a un título personalizado si se agrega más tarde.
+fviz_pca_ind(res2.pca, repel = TRUE, col.ind = "#696969", title = "")
+```
+
+```{r PCA3, warning=FALSE}
+# Crear un gráfico que muestra el porcentaje de varianza explicada por cada componente principal (scree plot).
+# Esto ayuda a visualizar la importancia relativa de los componentes principales en la representación de los datos.
+# Se utiliza la función fviz_eig del paquete factoextra para crear el gráfico.
+
+fviz_eig(
+  res2.pca,          # Objeto PCA generado previamente (res2.pca).
+  addlabels = TRUE,  # Agrega etiquetas de porcentaje sobre cada barra del gráfico.
+  title = "",        # No se muestra un título por defecto. Puedes personalizarlo si lo deseas.
+  hjust = -0.5       # Ajusta la posición horizontal de las etiquetas para que sean más legibles.
+)
+
+```
+
+# 2. Clustering Jerárquico
+
+El clustering jerárquico agrupa muestras basándose en la similitud de sus perfiles de variantes.
+
+### ¿Qué es el Clustering Jerárquico?
+
+El clustering jerárquico es un método de agrupamiento que organiza los datos en un árbol jerárquico, también conocido como dendrograma. Cada nivel del dendrograma representa una posible agrupación de los datos, desde cada punto como un grupo individual hasta un solo grupo que contiene todos los puntos. Este método se utiliza comúnmente en análisis genómicos para identificar subgrupos de muestras con perfiles mutacionales similares.
+
+## Pasos:
+
+1.  Extraer datos de interés del MAF.
+2.  Calcular la matriz de distancia.
+3.  Crear el dendrograma.
+
+```{r PCA4, warning=FALSE}
+# Crear un gráfico que muestra los clusters generados mediante análisis de clustering jerárquico con HCPC.
+# La función fviz_cluster ayuda a visualizar los clusters en el espacio definido por los componentes principales.
+res.hcpc <- HCPC(res2.pca, graph = FALSE)  # HCPC realiza un análisis jerárquico de conglomerados a partir del PCA
+
+fviz_cluster(
+  res.hcpc,            # Objeto HCPC (Hierarchical Clustering on Principal Components) generado previamente.
+  repel = TRUE,        # Evita que las etiquetas de las muestras se superpongan, mejorando la legibilidad.
+  show.clust.cent = TRUE, # Muestra los centros de los clusters en el gráfico.
+  palette = "jco",     # Define una paleta de colores para los clusters. Puedes cambiar "jco" por otra paleta
+  ggtheme = theme_minimal(), # Aplica un tema minimalista al gráfico (fondo limpio y sin bordes recargados).
+  main = ""            # Elimina el título predeterminado del gráfico.
+)
+
+```
+
+Este código realiza un PCA, aplica un análisis jerárquico de conglomerados (HCPC) sobre los resultados del PCA y luego genera un dendrograma visualizando los resultados, con ajustes estéticos para la presentación.
+
+```{r PCA5, warning=FALSE}
+# Realizar el análisis de componentes principales (PCA) con 2 componentes principales (ncp = 2)
+# 'res2.pca' es el objeto que contiene los resultados del PCA
+
+# Visualizar el dendrograma del análisis jerárquico de conglomerados (HCPC)
+# La función 'fviz_dend' genera el dendrograma de los resultados de HCPC
+fviz_dend(res.hcpc, 
+          cex = 0.7,  # Tamaño de los textos de las etiquetas
+          palette = "jco",  # Paleta de colores utilizada en el gráfico
+          rect = TRUE,  # Añadir rectángulos alrededor de los clústeres
+          rect_fill = TRUE,  # Rellenar los rectángulos con color
+          rect_border = "jco",  # Color del borde de los rectángulos
+          labels_track_height = 0.8,  # Ajustar la altura del área de las etiquetas
+          main="")  # Título del gráfico (vacío en este caso)
+
+```
+
+Este código genera un gráfico que muestra cómo cada variable contribuye al primer componente principal del análisis PCA, lo que puede ayudar a entender qué variables tienen más peso en la variabilidad observada en ese componente.
+
+```{r PCA6, warning=FALSE}
+# Visualizar la contribución de las variables al primer componente principal (eje 1)
+# La función 'fviz_contrib' muestra la contribución de cada variable en el análisis PCA
+fviz_contrib(res2.pca, 
+             choice = "var",  # Selección de variables para mostrar la contribución
+             axes = 1,  # Seleccionar el primer componente principal (eje 1)
+             title="")  # Título del gráfico (vacío en este caso)
+
+```
+
+# 3. Mapas de Calor (Heatmap)
+
+### ¿Qué es un Heatmap?
+
+Un mapa de calor es una representación gráfica de datos en la que los valores individuales se indican mediante colores. En genómica, los heatmaps se utilizan para visualizar la expresión génica, perfiles de mutaciones y relaciones entre muestras y genes.
+
+### Pasos:
+
+1.  Crear una matriz de datos.
+2.  Configurar opciones de visualización.
+3.  Generar el mapa de calor.
+
+```{r r4, warning=FALSE}
+# Crear un mapa de calor de la matriz de mutaciones
+library(pheatmap)
+
+strelka.select<-variantes[c("Tumor_Sample_Barcode","aaChange","REVEL","Hugo_Symbol")]
+
+strelka.select$REVEL[is.na(as.numeric(strelka.select$REVEL))] <- NA  # Cambia los valores no 
+strelka.select$REVEL<-as.numeric(strelka.select$REVEL)
+ggplot(data = strelka.select, mapping = aes(x = Tumor_Sample_Barcode, y = aaChange, fill = REVEL)) +
+  geom_tile(color = "white", size = 0.1) +  # Definir el color y el tamaño de los bordes de las celdas
+  scale_fill_gradient(low = "lightyellow", high = "red", limits = c(0, 0.7), na.value = "grey") +
+  xlab("Sample") +
+  ylab("Amino Acid Change") +
+  theme_minimal(base_size = 10) +
+  theme(
+    panel.spacing = unit(0, "lines"),
+    panel.border = element_rect(color = "black", fill = NA, size = 0.1),
+    panel.grid.major = element_blank(),  # Eliminar líneas de la cuadrícula mayor
+    axis.text.x = element_text(color = "black", size = 8, angle = 90, hjust = 1, vjust = 0.5),  # Ajustar tamaño y ángulo del texto del eje x
+    axis.text.y = element_text(color = "black", size = 8),  # Ajustar tamaño del texto del eje y
+    strip.text.y = element_text(size = 8, angle = 0, colour = "black", margin = margin(r = 100)), 
+    legend.position = "top",  # Mover la leyenda a la derecha
+    legend.title = element_text(size = 8),
+    legend.text = element_text(size = 8),
+    plot.title = element_text(hjust = 0.5, size = 12, face = "bold")  #Ajustar tamaño y alineación del título
+  ) +
+  ggtitle("BRCA1/2 Mutations")
+```
+
+### Ejemplos de Uso de Heatmaps:
+
+1.  **Explorar patrones mutacionales:**
+    -   Identificar genes mutados recurrentemente en tumores.
+2.  **Visualizar diferencias entre subgrupos:**
+    -   Comparar mutaciones entre tipos de cáncer.
+3.  **Análisis de co-ocurrencia:**
+    -   Detectar genes que se mutan conjuntamente en ciertas muestras.
+
+### Ejercicio
+
+-   Cambia los colores del mapa de calor utilizando el argumento `color` en `pheatmap`.
+
+# Resumen
+
+En este taller, aprendimos a:
+
+1.  Procesar un archivo MAF con datos de variantes genéticas.
+2.  Realizar clustering jerárquico para agrupar muestras similares.
+3.  Utilizar PCA para reducir la dimensionalidad y visualizar patrones.
+4.  Crear mapas de calor para explorar relaciones entre genes y muestras.
+
+Estos análisis son fundamentales para explorar y visualizar datos genómicos complejos. A medida que avances en su implementación, podrás utilizarlos para analizar tus propios datos y generar hipótesis biológicas relevantes.
